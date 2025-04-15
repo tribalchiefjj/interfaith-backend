@@ -7,9 +7,7 @@ const pool = require('./db');
 const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const authRoutes = require('./routes/authRoutes');
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://192.168.100.5:3000"
+const allowedOrigins = ["*"
 ];
 
 app.use(cors({
