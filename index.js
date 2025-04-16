@@ -8,7 +8,10 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const allowedOrigins = [`*`
+// Allow only known frontends (local dev + deployed frontend if any)
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://your-frontend-domain.com', // Optional: replace with your deployed frontend
 ];
 
 app.use(cors({
@@ -16,6 +19,7 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.error(`CORS blocked origin: ${origin}`);
       callback(new Error("Not allowed by CORS"));
     }
   },
@@ -23,16 +27,15 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Backend is working');
 });
 
-app.use('/api/posts', postRoutes); // 👈 Use route from the routes folder
-
+app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
-
 app.use('/api/auth', authRoutes);
 
 const PORT = process.env.PORT || 5000;
