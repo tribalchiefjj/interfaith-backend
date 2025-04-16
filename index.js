@@ -8,6 +8,15 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
+console.log("✅ Backend booting...");
+console.log("📦 Loading postRoutes...");
+app.use('/api/posts', postRoutes);
+console.log("📦 Loading commentRoutes...");
+app.use('/api/comments', commentRoutes);
+console.log("📦 Loading authRoutes...");
+app.use('/api/auth', authRoutes);
+
+
 // Allow only known frontends (local dev + deployed frontend if any)
 const allowedOrigins = [
   'http://localhost:3000',
@@ -33,6 +42,11 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Backend is working');
 });
+
+app.get('/api/test', (req, res) => {
+  res.json({ message: '✅ API is alive' });
+});
+
 
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
