@@ -8,19 +8,19 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-console.log("✅ Backend booting...");
-console.log("📦 Loading postRoutes...");
-app.use('/api/posts', postRoutes);
-console.log("📦 Loading commentRoutes...");
-app.use('/api/comments', commentRoutes);
-console.log("📦 Loading authRoutes...");
-app.use('/api/auth', authRoutes);
+// console.log("✅ Backend booting...");
+// console.log("📦 Loading postRoutes...");
+// app.use('/api/posts', postRoutes);
+// console.log("📦 Loading commentRoutes...");
+// app.use('/api/comments', commentRoutes);
+// console.log("📦 Loading authRoutes...");
+// app.use('/api/auth', authRoutes);
 
 
 // Allow only known frontends (local dev + deployed frontend if any)
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://your-frontend-domain.com', // Optional: replace with your deployed frontend
+  'https://your-frontend-domain.com', // Replace with your deployed frontend
 ];
 
 app.use(cors({
