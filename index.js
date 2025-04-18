@@ -20,8 +20,9 @@ const authRoutes = require('./routes/authRoutes');
 // Allow only known frontends (local dev + deployed frontend if any)
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://your-frontend-domain.com', // Replace with your deployed frontend
+  'https://B.echoes.vercel.app', 
 ];
+
 
 app.use(cors({
   origin: function (origin, callback) {
