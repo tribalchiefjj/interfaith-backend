@@ -20,7 +20,7 @@ const authRoutes = require('./routes/authRoutes');
 // Allow only known frontends (local dev + deployed frontend if any)
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://B.echoes.vercel.app', 
+  'https://Bechoes.vercel.app', 
 ];
 
 
