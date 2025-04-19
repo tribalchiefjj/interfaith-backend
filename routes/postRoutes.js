@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
+const { isAdmin } = require('../middleware/authMiddleware');
+
 
 // Create a post
 router.post('/', async (req, res) => {
@@ -92,6 +94,29 @@ router.put('/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to update post' });
+  }
+});
+
+
+/// 🔒 Admin only: Pin or unpin a post
+router.patch('/:id/pin', isAdmin, async (req, res) => {
+  const { id } = req.params;
+  const { pinned } = req.body;
+
+  try {
+    const result = await pool.query(
+      'UPDATE posts SET pinned = $1 WHERE id = $2 RETURNING *',
+      [pinned, id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error pinning/unpinning post:', error);
+    res.status(500).json({ error: 'Failed to update pin status' });
   }
 });
 
