@@ -21,6 +21,8 @@ const authRoutes = require('./routes/authRoutes');
 const allowedOrigins = [
   'http://localhost:3000',
   'https://bechoes.vercel.app', 
+  methods, ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], 
+  allowedHeaders, ['Content-Type', 'Authorization'],
 ];
 
 
