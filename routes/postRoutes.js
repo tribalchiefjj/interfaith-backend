@@ -99,7 +99,7 @@ router.put('/:id', async (req, res) => {
 
 
 /// 🔒 Admin only: Pin or unpin a post
-app.patch('/api/posts/:id', authenticateAdmin, async (req, res) => {
+router.patch('/:id/pin', isAdmin, async (req, res) => {
   const { id } = req.params;
   const { pinned } = req.body;
 
@@ -108,17 +108,22 @@ app.patch('/api/posts/:id', authenticateAdmin, async (req, res) => {
   }
 
   try {
-    const post = await db.posts.update({
-      where: { id: parseInt(id) },
-      data: { pinned },
-    });
+    const result = await pool.query(
+      'UPDATE posts SET pinned = $1 WHERE id = $2 RETURNING *',
+      [pinned, id]
+    );
 
-    res.status(200).json(post);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to update post' });
   }
 });
+
 
 
 
